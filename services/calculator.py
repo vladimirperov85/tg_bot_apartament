@@ -30,20 +30,20 @@ RATES_BY_CLASS = {
         celing_materails=160
         ),
     "Стандарт": RepairRates(
-        wall_labor=430,
-        wall_materials=260,
-        floor_labor=520,
-        floor_materails=900,
-        ceiling_labor=300,
-        celing_materails=160
+        wall_labor=530,
+        wall_materials=360,
+        floor_labor=620,
+        floor_materails=1000,
+        ceiling_labor=400,
+        celing_materails=260
         ),
     "Премиум": RepairRates(
-        wall_labor=430,
-        wall_materials=260,
-        floor_labor=520,
-        floor_materails=900,
-        ceiling_labor=300,
-        celing_materails=160
+        wall_labor=630,
+        wall_materials=460,
+        floor_labor=620,
+        floor_materails=1100,
+        ceiling_labor=500,
+        celing_materails=260
         ),
 }
 
@@ -64,14 +64,19 @@ def calculate_estimated(area,ceiling_height,rooms,repair_class):
     # сумма по полу = площадь пола * (работы + материалы)
     floor_total = floor_area*(rates.floor_labor+rates.floor_materails)
 
+    #cумма по потолку = площадь потолка *( работы+материал)
     ceiling_total = ceiling_area*(rates.ceiling_labor+ rates.celing_materails)
-
+    
+    # за каждую комнату после 1 добавляем 5% от общей суммы
     room_complexity = 1 + max(0,rooms-1)* 0.05
 
+    # доставка и уборка
     delivery_and_cleanup = area * 180
 
+    # предварительнная сумма(цена)
     subtotal= wall_total + floor_total + ceiling_total + delivery_and_cleanup
 
+    # итоговая стоимость
     total = subtotal * room_complexity
 
     return{
@@ -88,7 +93,7 @@ def calculate_estimated(area,ceiling_height,rooms,repair_class):
     }
 
 # Псевдоним для calculate_estimate
-calculate_estimate = calculate_estimated
+#calculate_estimate = calculate_estimated
 
 def format_money(value):
     return f"${value:,.0f}".replace(",", " ") + "руб."

@@ -4,7 +4,7 @@ from aiogram.types import Message,ReplyKeyboardRemove
 
 
 from keyboards import REPAIR_CLASSES, repair_classes_keyboard
-from services.calculator import calculate_estimate,format_estimate
+from services.calculator import calculate_estimated,format_estimate
 from states import EstimateForm
 from utils.parsers import parse_positive_int, parse_positive_float
 
@@ -14,7 +14,7 @@ router = Router(name=__name__)
 async def process_area(message: Message,state:FSMContext):
     area = parse_positive_float(message.text)
     if area is None or not 10 <=area<=1000:
-        await message.answer("Площадь должна быть в диапазоне от 5 до 1000")
+        await message.answer("Площадь должна быть в диапазоне от 10 до 1000")
         return
     
     await state.update_data(area=area)
@@ -39,7 +39,7 @@ async def process_ceiling_height(message: Message,state:FSMContext):
 async def process_rooms(message: Message,state:FSMContext):
     rooms = parse_positive_int(message.text)
     if rooms is None or not 1 <=rooms<=15:
-        await message.answer("Введите колтчесво комнат должна быть в диапазоне от 1 до 15")
+        await message.answer("Введите количество комнат должна быть в диапазоне от 1 до 15")
         return
     
     await state.update_data(rooms=rooms)
@@ -56,7 +56,7 @@ async def process_repair_class(message: Message,state:FSMContext):
     
     data = await state.update_data(repair_class=repair_class)
     await state.clear()
-    estimate = calculate_estimate(
+    estimate = calculate_estimated(
         area=data["area"],
         ceiling_height=(data['ceiling_height']),
         rooms=data['rooms'],
