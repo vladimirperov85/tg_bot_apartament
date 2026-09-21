@@ -39,7 +39,7 @@ async def process_ceiling_height(message: Message,state:FSMContext):
 async def process_rooms(message: Message,state:FSMContext):
     rooms = parse_positive_int(message.text)
     if rooms is None or not 1 <=rooms<=15:
-        await message.answer("Введите количество комнат должна быть в диапазоне от 1 до 15")
+        await message.answer("Введите количество комнат - должны быть в диапазоне от 1 до 15")
         return
     
     await state.update_data(rooms=rooms)
@@ -51,7 +51,7 @@ async def process_rooms(message: Message,state:FSMContext):
 async def process_repair_class(message: Message,state:FSMContext):
     repair_class = (message.text).strip().capitalize()
     if repair_class not in REPAIR_CLASSES:
-        await message.answer("Выберете один зи вариантов на клавиатуре",reply_markup=repair_classes_keyboard())
+        await message.answer("Выберете один из вариантов на клавиатуре",reply_markup=repair_classes_keyboard())
         return
     
     data = await state.update_data(repair_class=repair_class)
