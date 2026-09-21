@@ -109,7 +109,7 @@ def format_estimate(
     """Собираем html сметы для отправки пользователю"""
     complexity_percent = round((estimate['room_complexity'] -1) * 100)
     return (
-        "<b>Расчеитная стоимость ремонта:</b>\n\n"
+        "<b>Расчетная стоимость ремонта:</b>\n\n"
         "<b> Исходные данные: </b>\n"
         f"Площадь помещения:<b>{area:g}кв.м</b>\n "
         f"Высота потолков:<b>{ceiling_height:g}кв.м</b>\n "
